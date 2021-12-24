@@ -1,24 +1,30 @@
-from flask import Flask
+from flask import Flask, request
 from markupsafe import escape
 import os
+
+from tg_bot.webhook_handler import UpdateHandler
 
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def alive_response():
     """Basic REST response function. Returns something if app is alive"""
     return "App is alive!"
 
 
-@app.route("/chat")
+@app.route("/chat", methods=["POST"])
 def parse_tg_message() -> str:
     """Telegram message requests responder"""
-    # TODO
-    return "This should be message"
+    try:
+        request_data = request.get_json(force=True)
+        bot = UpdateHandler(request_data)
+        return "This should be message"
+    except Exception as e:
+        return "Unsuccessfull"
 
 
-@app.route("/invoke/<user_id>")
+@app.route("/invoke/<user_id>", methods=["GET"])
 def invoke_asker(user_id: str) -> str:
     """Internal invoking method"""
     return f"This should be another message id is {escape(user_id)}"
