@@ -23,7 +23,8 @@ def parse_tg_message() -> str:
     try:
         request_data = request.get_json(force=True)
         bot = UpdateHandler(request_data, os.environ["tg_bot_token"])
-        bot.do_something()
+        text = bot.do_something()
+        return text
     except Exception:  # pylint: disable=broad-except
         abort(500)
 
