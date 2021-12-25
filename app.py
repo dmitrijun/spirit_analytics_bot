@@ -1,3 +1,6 @@
+"""
+    Flask app wrap over bot
+"""
 import os
 
 from flask import Flask, abort, request
@@ -21,8 +24,7 @@ def parse_tg_message() -> str:
         request_data = request.get_json(force=True)
         bot = UpdateHandler(request_data, os.environ["tg_bot_token"])
         bot.do_something()
-        return "Successfull"
-    except Exception as e:
+    except Exception:  # pylint: disable=broad-except
         abort(500)
 
 

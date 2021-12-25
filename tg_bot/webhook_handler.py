@@ -1,3 +1,6 @@
+"""
+    Wholesome telegram update handler
+"""
 import logging
 
 from telegram import Bot
