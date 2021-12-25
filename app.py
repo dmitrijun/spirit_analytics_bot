@@ -1,6 +1,7 @@
-from flask import Flask, request, abort
-from markupsafe import escape
 import os
+
+from flask import Flask, abort, request
+from markupsafe import escape
 
 from tg_bot.webhook_handler import UpdateHandler
 
@@ -23,6 +24,7 @@ def parse_tg_message() -> str:
         return "Successfull"
     except Exception as e:
         abort(500)
+
 
 @app.route("/invoke/<user_id>", methods=["GET"])
 def invoke_asker(user_id: str) -> str:
