@@ -26,4 +26,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint --init-hook="import sys; sys.path.append(".")" `ls -R|grep .py$|xargs`
+        pylint --init_hook="import sys; sys.path.append('.')" `ls -R|grep .py$|xargs`
