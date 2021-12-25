@@ -27,6 +27,7 @@ def parse_tg_message() -> str:
         return text
     except Exception:  # pylint: disable=broad-except
         abort(500)
+        return "Unsuccessfull"
 
 
 @app.route("/invoke/<user_id>", methods=["GET"])
