@@ -1,7 +1,9 @@
+#encoding utf-8
 """
     Wholesome telegram update handler
 """
-import logging
+import random
+import os
 
 from telegram import Bot
 
@@ -9,20 +11,26 @@ from telegram import Bot
 class UpdateHandler():
     def __init__(self, update_json: dict, bot_token: str):
         try:
-            logging.info(f"Initializing Handler: {update_json}")
             self.bot = Bot(bot_token)
             self.text = update_json["message"]["text"]
             self.chat_id = update_json["message"]["chat"]["id"]
-            # logging.info(f"Got new message with text: '{self.update_object.message.text}'")
-        except Exception as e:
-            logging.error(f"Init unsuccessfull {e}")
-            raise ValueError()
+        except Exception: # pylint: disable=broad-except
+            pass
 
     def do_something(self):
+        """
+            Sending random citate now
+        """
         try:
-            # logging.debug(f"Sending message to {self.update_object.effective_chat.id}")
+            reply_text = "I do not care what you've just sent :^).\n"
+            with open(os.path.join("sources", "citaites.txt"), "r", encoding="utf-8") as file:
+                allText = file.read()
+                lines = allText.split('\n')
+                reply_text += "But here's a citate for u: \n"
+                reply_text += random.choice(lines)
+
             self.bot.send_message(
-                chat_id=self.chat_id, text="I do not care what you've just sent :^).")
-            # logging.info(f"Message successfully sent to{self.update_object.effective_chat.id}")
-        except Exception as e:
-            logging.error(f"Unable to send message: {e}")
+                chat_id=self.chat_id, text=reply_text)
+            return reply_text
+        except Exception: # pylint: disable=broad-except
+            pass
