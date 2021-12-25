@@ -19,7 +19,8 @@ def parse_tg_message() -> str:
     try:
         request_data = request.get_json(force=True)
         bot = UpdateHandler(request_data)
-        return "This should be message"
+        bot.do_something()
+        return "Successfull"
     except Exception as e:
         return "Unsuccessfull"
 
