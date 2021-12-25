@@ -5,9 +5,8 @@ import os
 
 from flask import Flask, abort, request
 from markupsafe import escape
-# pylint: disable=import-error
-from tg_bot.webhook_handler import UpdateHandler 
-# pylint: enable=import-error
+
+from tg_bot.webhook_handler import UpdateHandler
 
 app = Flask(__name__)
 
@@ -25,7 +24,7 @@ def parse_tg_message() -> str:
         request_data = request.get_json(force=True)
         bot = UpdateHandler(request_data, os.environ["tg_bot_token"])
         bot.do_something()
-    except Exception: # pylint: disable=broad-except
+    except Exception:  # pylint: disable=broad-except
         abort(500)
 
 
