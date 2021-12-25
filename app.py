@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 from markupsafe import escape
 import os
 
@@ -18,12 +18,11 @@ def parse_tg_message() -> str:
     """Telegram message requests responder"""
     try:
         request_data = request.get_json(force=True)
-        bot = UpdateHandler(request_data)
+        bot = UpdateHandler(request_data, os.environ["tg_bot_token"])
         bot.do_something()
         return "Successfull"
     except Exception as e:
-        return "Unsuccessfull"
-
+        abort(500)
 
 @app.route("/invoke/<user_id>", methods=["GET"])
 def invoke_asker(user_id: str) -> str:
