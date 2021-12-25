@@ -1,3 +1,6 @@
+"""
+    Flask app wrap over bot
+"""
 import os
 
 from flask import Flask, abort, request
